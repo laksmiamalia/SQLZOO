@@ -26,4 +26,41 @@ WHERE title = 'Casablanca'
 
 '6. Obtain the cast list for 'Casablanca'.'
 'We will use movieid=11768, (or whatever value you got from the previous question)'
+SELECT name
+FROM actor LEFT JOIN casting ON ( id = actorid)
+WHERE movieid = 11768
 
+'7. Obtain the cast list for the film 'Alien''
+SELECT name
+FROM actor JOIN casting ON ( id = actorid )
+WHERE movieid = (SELECT id FROM movie WHERE title = 'Alien')
+
+'8. List the films in which 'Harrison Ford' has appeared'
+SELECT title
+FROM movie JOIN casting ON ( id = movieid)
+WHERE actorid = (SELECT id FROM actor WHERE name = 'Harrison Ford')
+
+'9. List the films where 'Harrison Ford' has appeared - but not in the starring role.'
+'[Note: the ord field of casting gives the position of the actor. If ord=1 then this actor is in the starring role]'
+SELECT title
+FROM movie JOIN casting ON ( id = movieid)
+WHERE actorid = (SELECT id FROM actor WHERE name = 'Harrison Ford')
+AND ord <> '1'
+
+'10. List the films together with the leading star for all 1962 films.'
+SELECT MO.title, AC.name
+FROM movie MO
+JOIN casting CA on MO.id = movieid
+JOIN actor AC on AC.id = actorid
+WHERE MO.yr = 1962 AND CA.ord = '1'
+
+'11. Which were the busiest years for 'Rock Hudson', show the year and the number of movies he made each year for any year in which he made more than 2 movies.'
+SELECT yr,COUNT(title)
+FROM movie MO
+JOIN casting CA on MO.id = movieid
+JOIN actor AC on AC.id = actorid
+WHERE AC.name= 'Rock Hudson'
+GROUP BY yr
+HAVING COUNT(title) > 2
+
+'12. List the film title and the leading actor for all of the films 'Julie Andrews' played in.'
