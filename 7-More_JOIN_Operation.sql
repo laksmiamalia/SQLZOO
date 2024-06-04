@@ -23,3 +23,7 @@ WHERE name = 'Glenn Close'
 SELECT id
 FROM movie
 WHERE title = 'Casablanca'
+
+'6. Obtain the cast list for 'Casablanca'.'
+'We will use movieid=11768, (or whatever value you got from the previous question)'
+
